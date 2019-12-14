@@ -7,7 +7,7 @@
 Summary:	Core components for the KDE's Activities Activity Manager
 Name:		kf5-%{kfname}
 Version:	5.59.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/frameworks/%{kdeframever}/%{kfname}-%{version}.tar.xz
@@ -28,6 +28,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	kf5-attica-devel >= %{version}
 BuildRequires:	kf5-extra-cmake-modules >= %{version}
 BuildRequires:	kf5-kauth-devel >= %{version}
+BuildRequires:	kf5-kactivities-devel >= %{version}
 BuildRequires:	kf5-kbookmarks-devel >= %{version}
 BuildRequires:	kf5-kcmutils-devel >= %{version}
 BuildRequires:	kf5-kcodecs-devel >= %{version}
@@ -104,8 +105,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %ghost %{_libdir}/libKF5ActivitiesStats.so.1
 %{_libdir}/libKF5ActivitiesStats.so.5.*.*
-%{_pkgconfigdir}/libKActivitiesStats.pc
-%{_libdir}/qt5/mkspecs/modules/qt_KActivitiesStats.pri
 
 %files devel
 %defattr(644,root,root,755)
@@ -113,3 +112,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/KF5/kactivitiesstats_version.h
 %{_libdir}/cmake/KF5ActivitiesStats
 %{_libdir}/libKF5ActivitiesStats.so
+%{_pkgconfigdir}/libKActivitiesStats.pc
+%{_libdir}/qt5/mkspecs/modules/qt_KActivitiesStats.pri
