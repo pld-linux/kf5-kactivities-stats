@@ -1,17 +1,17 @@
 # TODO:
 # Conflict /usr/bin/kactivitymanagerd
-%define		kdeframever	5.67
+%define		kdeframever	5.79
 %define		qtver		5.9.0
 %define		kfname		kactivities-stats
 
 Summary:	Core components for the KDE's Activities Activity Manager
 Name:		kf5-%{kfname}
-Version:	5.67.0
+Version:	5.79.0
 Release:	1
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://download.kde.org/stable/frameworks/%{kdeframever}/%{kfname}-%{version}.tar.xz
-# Source0-md5:	b89c11f239048e4d65b4781fbc660a41
+# Source0-md5:	1a9684e30416fdead96fdd72dd5f1e59
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5DBus-devel >= %{qtver}
@@ -27,8 +27,8 @@ BuildRequires:	cmake >= 2.8.12
 BuildRequires:	gettext-devel
 BuildRequires:	kf5-attica-devel >= %{version}
 BuildRequires:	kf5-extra-cmake-modules >= %{version}
-BuildRequires:	kf5-kauth-devel >= %{version}
 BuildRequires:	kf5-kactivities-devel >= %{version}
+BuildRequires:	kf5-kauth-devel >= %{version}
 BuildRequires:	kf5-kbookmarks-devel >= %{version}
 BuildRequires:	kf5-kcmutils-devel >= %{version}
 BuildRequires:	kf5-kcodecs-devel >= %{version}
@@ -106,6 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %ghost %{_libdir}/libKF5ActivitiesStats.so.1
 %{_libdir}/libKF5ActivitiesStats.so.5.*.*
 %{_datadir}/qlogging-categories5/kactivities-stats.categories
+%{_datadir}/qlogging-categories5/kactivities-stats.renamecategories
 
 %files devel
 %defattr(644,root,root,755)
