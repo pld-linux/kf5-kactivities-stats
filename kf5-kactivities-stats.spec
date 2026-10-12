@@ -1,10 +1,11 @@
 #
 # Conditional build:
-%bcond_with	tests		# build with tests
+%bcond_with	tests		# test suite
 # TODO:
 # Conflict /usr/bin/kactivitymanagerd
 %define		kdeframever	5.116
-%define		qtver		5.15.2
+%define		kf_ver		%{version}
+%define		qt_ver		5.15.2
 %define		kfname		kactivities-stats
 
 Summary:	Library to access the usage statistics data collected by KDE activity manager
@@ -16,51 +17,30 @@ License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	https://download.kde.org/stable/frameworks/%{kdeframever}/%{kfname}-%{version}.tar.xz
 # Source0-md5:	f7245d1cf35b834b2242fcfc17ad6934
-URL:		http://www.kde.org/
-BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5DBus-devel >= %{qtver}
-BuildRequires:	Qt5Gui-devel >= %{qtver}
-BuildRequires:	Qt5Network-devel >= %{qtver}
-BuildRequires:	Qt5Qml-devel >= %{qtver}
-BuildRequires:	Qt5Sql-devel >= %{qtver}
-BuildRequires:	Qt5Test-devel >= %{qtver}
-BuildRequires:	Qt5Widgets-devel >= %{qtver}
-BuildRequires:	Qt5Xml-devel >= %{qtver}
-BuildRequires:	boost-devel
+URL:		https://kde.org/
+BuildRequires:	Qt5Core-devel >= %{qt_ver}
+BuildRequires:	Qt5DBus-devel >= %{qt_ver}
+%{?with_tests:BuildRequires:	Qt5Gui-devel >= %{qt_ver}}
+%{?with_tests:BuildRequires:	Qt5Quick-devel >= %{qt_ver}}
+BuildRequires:	Qt5Sql-devel >= %{qt_ver}
+%{?with_tests:BuildRequires:	Qt5Test-devel >= %{qt_ver}}
+%{?with_tests:BuildRequires:	Qt5Widgets-devel >= %{qt_ver}}
+%{?with_tests:BuildRequires:	boost-devel >= 1.49}
 BuildRequires:	cmake >= 3.16
-BuildRequires:	gettext-devel
-BuildRequires:	kf5-attica-devel >= %{version}
-BuildRequires:	kf5-extra-cmake-modules >= %{version}
-BuildRequires:	kf5-kactivities-devel >= %{version}
-BuildRequires:	kf5-kauth-devel >= %{version}
-BuildRequires:	kf5-kbookmarks-devel >= %{version}
-BuildRequires:	kf5-kcmutils-devel >= %{version}
-BuildRequires:	kf5-kcodecs-devel >= %{version}
-BuildRequires:	kf5-kcompletion-devel >= %{version}
-BuildRequires:	kf5-kconfig-devel >= %{version}
-BuildRequires:	kf5-kconfigwidgets-devel >= %{version}
-BuildRequires:	kf5-kcoreaddons-devel >= %{version}
-BuildRequires:	kf5-kdbusaddons-devel >= %{version}
-BuildRequires:	kf5-kdeclarative-devel >= %{version}
-BuildRequires:	kf5-kglobalaccel-devel >= %{version}
-BuildRequires:	kf5-kguiaddons-devel >= %{version}
-BuildRequires:	kf5-ki18n-devel >= %{version}
-BuildRequires:	kf5-kiconthemes-devel >= %{version}
-BuildRequires:	kf5-kio-devel >= %{version}
-BuildRequires:	kf5-kitemviews-devel >= %{version}
-BuildRequires:	kf5-kjobwidgets-devel >= %{version}
-BuildRequires:	kf5-kservice-devel >= %{version}
-BuildRequires:	kf5-ktextwidgets-devel >= %{version}
-BuildRequires:	kf5-kwidgetsaddons-devel >= %{version}
-BuildRequires:	kf5-kwindowsystem-devel >= %{version}
-BuildRequires:	kf5-kxmlgui-devel >= %{version}
-BuildRequires:	kf5-solid-devel >= %{version}
-BuildRequires:	kf5-sonnet-devel >= %{version}
+BuildRequires:	gettext-tools
+BuildRequires:	kf5-extra-cmake-modules >= %{kf_ver}
+BuildRequires:	kf5-kactivities-devel >= %{kf_ver}
+BuildRequires:	kf5-kconfig-devel >= %{kf_ver}
 BuildRequires:	ninja
-BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+Requires:	Qt5Core >= %{qt_ver}
+Requires:	Qt5DBus >= %{qt_ver}
+Requires:	Qt5Sql >= %{qt_ver}
 Requires:	kf5-dirs
+Requires:	kf5-kactivities-devel >= %{kf_ver}
+Requires:	kf5-kconfig-devel >= %{kf_ver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		qt5dir		%{_libdir}/qt5
@@ -87,6 +67,11 @@ Summary:	Header files for %{kfname} development
 Summary(pl.UTF-8):	Pliki nagłówkowe dla programistów używających %{kfname}
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	Qt5Core-devel >= %{qt_ver}
+Requires:	Qt5DBus-devel >= %{qt_ver}
+Requires:	Qt5Sql-devel >= %{qt_ver}
+Requires:	kf5-kactivities-devel >= %{kf_ver}
+Requires:	kf5-kconfig-devel >= %{kf_ver}
 
 %description devel
 Header files for %{kfname} development.
@@ -122,7 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_libdir}/libKF5ActivitiesStats.so.5.*.*
+%doc MAINTAINER README.md
+%{_libdir}/libKF5ActivitiesStats.so.*.*.*
 %ghost %{_libdir}/libKF5ActivitiesStats.so.1
 %{_datadir}/qlogging-categories5/kactivities-stats.categories
 %{_datadir}/qlogging-categories5/kactivities-stats.renamecategories
