@@ -1,8 +1,7 @@
 #
 # Conditional build:
 %bcond_with	tests		# test suite
-# TODO:
-# Conflict /usr/bin/kactivitymanagerd
+
 %define		kdeframever	5.116
 %define		kf_ver		%{version}
 %define		qt_ver		5.15.2
@@ -12,7 +11,7 @@ Summary:	Library to access the usage statistics data collected by KDE activity m
 Summary(pl.UTF-8):	Biblioteka dostępu do danych statystyk użycia zbieranych przez zarządcę aktywności KDE
 Name:		kf5-%{kfname}
 Version:	5.116.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	https://download.kde.org/stable/frameworks/%{kdeframever}/%{kfname}-%{version}.tar.xz
