@@ -7,7 +7,8 @@
 %define		qtver		5.15.2
 %define		kfname		kactivities-stats
 
-Summary:	Core components for the KDE's Activities Activity Manager
+Summary:	Library to access the usage statistics data collected by KDE activity manager
+Summary(pl.UTF-8):	Biblioteka dostępu do danych statystyk użycia zbieranych przez zarządcę aktywności KDE
 Name:		kf5-%{kfname}
 Version:	5.116.0
 Release:	1
@@ -65,11 +66,21 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		qt5dir		%{_libdir}/qt5
 
 %description
-System service to manage user's activities, track the usage patterns
-etc. KActivities library API for using and interacting with the
-Activity Manager as a consumer, application adding information to them
-or as an activity manager. Workspace Plugins for KDE workspace to
-easier integrate activities (KIO, etc.)
+The KActivitiesStats library provides a querying mechanism for the
+data that the activity manager collects - which documents have been
+opened by which applications, and what documents have been linked to
+which activity. The activity manager also keeps the score for each
+document which gets higher when a particular document has been often
+accessed or kept open for longer periods of time. This score is also
+available through the querying mechanism.
+
+%description
+Biblioteka KActivitiesStats udostępnia mechanizm zapytań o dane
+zbierane przez zarządcę aktywności: które dokumenty były otwierane
+przez które aplikacje i jakie dokumenty były łączone z jaką
+aktywnością. Zarządca aktywności utrzymuje także punktację dla każdego
+dokumentu, rosnącą przy częstym dostępnie lub dłuższym czasie
+otwarcia. Punktacja ta jest także dostępna przez mechanizm zapytań.
 
 %package devel
 Summary:	Header files for %{kfname} development
@@ -98,28 +109,28 @@ Pliki nagłówkowe dla programistów używających %{kfname}.
 %ninja_build -C build test
 %endif
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %ninja_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
-%ghost %{_libdir}/libKF5ActivitiesStats.so.1
 %{_libdir}/libKF5ActivitiesStats.so.5.*.*
+%ghost %{_libdir}/libKF5ActivitiesStats.so.1
 %{_datadir}/qlogging-categories5/kactivities-stats.categories
 %{_datadir}/qlogging-categories5/kactivities-stats.renamecategories
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/KF5/KActivitiesStats
-%{_libdir}/cmake/KF5ActivitiesStats
 %{_libdir}/libKF5ActivitiesStats.so
+%{_includedir}/KF5/KActivitiesStats
 %{_pkgconfigdir}/libKActivitiesStats.pc
-%{_libdir}/qt5/mkspecs/modules/qt_KActivitiesStats.pri
+%{_libdir}/cmake/KF5ActivitiesStats
+%{qt5dir}/mkspecs/modules/qt_KActivitiesStats.pri
